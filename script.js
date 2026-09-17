@@ -33,6 +33,14 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
 const certificateLightbox = document.getElementById('certificateLightbox');
 const certificateLightboxImage = document.getElementById('certificateLightboxImage');
+const certificateLightboxClose = document.createElement('button');
+
+certificateLightboxClose.type = 'button';
+certificateLightboxClose.className = 'certificate-lightbox-close';
+certificateLightboxClose.setAttribute('aria-label', 'Close certificate preview');
+certificateLightboxClose.textContent = '×';
+certificateLightbox?.prepend(certificateLightboxClose);
+certificateLightboxClose.addEventListener('click', closeCertificateLightbox);
 
 document.querySelectorAll('.certificate-open').forEach(card => {
   card.addEventListener('click', event => {
