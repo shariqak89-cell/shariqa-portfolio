@@ -30,3 +30,36 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 document.getElementById('year').textContent = new Date().getFullYear();
+
+const certificateLightbox = document.getElementById('certificateLightbox');
+const certificateLightboxImage = document.getElementById('certificateLightboxImage');
+
+document.querySelectorAll('.certificate-open').forEach(card => {
+  card.addEventListener('click', event => {
+    event.preventDefault();
+    const image = card.querySelector('img');
+    if (!image || !certificateLightbox || !certificateLightboxImage) return;
+    certificateLightboxImage.src = image.src;
+    certificateLightboxImage.alt = image.alt;
+    certificateLightboxImage.classList.toggle('district-preview', card.dataset.certificate === 'district');
+    certificateLightbox.classList.add('open');
+    certificateLightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  });
+});
+
+function closeCertificateLightbox() {
+  if (!certificateLightbox || !certificateLightboxImage) return;
+  certificateLightbox.classList.remove('open');
+  certificateLightbox.setAttribute('aria-hidden', 'true');
+  certificateLightboxImage.removeAttribute('src');
+  document.body.style.overflow = '';
+}
+
+certificateLightbox?.addEventListener('click', event => {
+  if (event.target === certificateLightbox) closeCertificateLightbox();
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') closeCertificateLightbox();
+});
